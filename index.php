@@ -64,6 +64,9 @@
                         <input type="text" name="uname" class="form-control" placeholder="Username" required minlength="5">
                     </div>
                     <div class="form-group">
+                        <input type="email" name="email" class="form-control" placeholder="Email Address" required >
+                    </div>
+                    <div class="form-group">
                         <input type="password" name="pass" id="pass" class="form-control" placeholder="Password" required minlength="6">                    </div>
                     <div class="form-group">
                         <input type="password" name="cpass" id="cpass" class="form-control" placeholder="Confirm Password" required>
