@@ -31,7 +31,7 @@
           $("#forgot-frm").validate(); 
       
         //   submit form without page refresh
-
+//for registration
           $("#register").click(function(e){
             if(document.getElementById('register-frm').checkValidity()){
                 e.preventDefault();
@@ -48,44 +48,43 @@
             return true;
           });
 
+          //for login
+
+          $("#login").click(function(e){
+            if(document.getElementById('login-frm').checkValidity()){
+                e.preventDefault();
+                $.ajax({
+                    url: 'action.php',
+                    method:'post',
+                    data:$("#login-frm").serialize()+'&action=login',
+                    success:function(response){
+                        $("#alert").show();
+                        $("#result").html(response);
+                    }
+                });
+            }
+            return true;
+          });
+
+          // for forget pswrd
+
+          $("#forgot").click(function(e){
+            if(document.getElementById('forgot-frm').checkValidity()){
+                e.preventDefault();
+                $.ajax({
+                    url: 'action.php',
+                    method:'post',
+                    data:$("#forgot-frm").serialize()+'&action=register',
+                    success:function(response){
+                        $("#alert").show();
+                        $("#result").html(response);
+                    }
+                });
+            }
+            return true;
+          });
 
 
 
-        // $("login").click(function(e){
-        //     if(document.getElementById('login-frm').checkValidity()){
-        //         e.preventDefault();
-        //         $.ajax({
-        //             url:'action.php',
-        //             method:'post',
-        //             data:$("#login-frm").serialize()+'&action=login',
-        //             success:function(response){
-        //                 $("#alert").show();
-        //                 $("result").html(response);
 
-
-        //             }
-        //         })
-        //     }
-        //     return true ;
-
-        // });
-
-        // $("forgot").click(function(e){
-        //     if(document.getElementById('forgot-frm').checkValidity()){
-        //         e.preventDefault();
-        //         $.ajax({
-        //             url:'action.php',
-        //             method:'post',
-        //             data:$("#forgot-frm").serialize()+'&action=forgot',
-        //             success:function(response){
-        //                 $("#alert").show();
-        //                 $("result").html(response);
-
-
-        //             }
-        //         })
-        //     }
-        //     return true ;
-
-        // });
       });
