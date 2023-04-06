@@ -32,8 +32,8 @@ if(isset($_POST['action']) && $_POST['action'] == 'register'){
         }
 
         else{
-            $stmt = $conn->prepare("INSERT into users(name, email ,pass, created) VALUES(?,?,?,?)");
-            $stmt->bind_param("ssss",$name,$email,$pass,$created);
+            $stmt = $conn->prepare("INSERT into users(name, username, email ,pass, created) VALUES(?,?,?,?,?)");
+            $stmt->bind_param("sssss",$name,$uname,$email,$pass,$created);
             if($stmt->execute()){
                 echo 'Registered Successfully. Login Now!';
             }
