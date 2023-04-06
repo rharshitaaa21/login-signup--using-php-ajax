@@ -11,6 +11,22 @@ if(isset($_POST['action']) && $_POST['action'] == 'register'){
      $cpass = sha1($cpass);
      $created = date('Y-m-d');
 
+     $errors = array();
+
+     if (strlen($pass) < 6) {
+        $errors[] = "Password should be min 6 characters";
+    }
+if (!preg_match("/\d/", $pass)) {
+    $errors[] = "Password should contain at least one digit";
+}
+
+
+if ($errors) {
+    foreach ($errors as $error) {
+    }
+    die();
+}
+
      if($pass != $cpass){
         echo 'Password did not match';
         exit();
@@ -21,8 +37,6 @@ if(isset($_POST['action']) && $_POST['action'] == 'register'){
         $sql->execute();
         $result =$sql->get_result();
         $row = $result->fetch_array(MYSQLI_ASSOC);
-
-
 
         if( isset($row['username']) ==$uname){
             echo 'Username not available. Please try something else';
@@ -40,8 +54,7 @@ if(isset($_POST['action']) && $_POST['action'] == 'register'){
             else{
                 echo 'Something went wrong. Please try again';
             }
-        }
-     }
+        }    }
 }
      if(isset($_POST['action']) && $_POST['action'] == 'login'){
         session_start();
@@ -74,31 +87,6 @@ if(isset($_POST['action']) && $_POST['action'] == 'register'){
        }
 
      }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-     
-
 
 function check_input($data){
     $data = trim($data);

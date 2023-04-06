@@ -28,7 +28,6 @@
       <li class="nav-item">
         <a class="nav-link" href="#">About</a>
       </li>
-     
       <li class="nav-item">
         <a class="nav-link" href="#">Register</a>
       </li>
@@ -55,6 +54,7 @@
   </form>
   </div>
 </nav>
+
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->

@@ -3,7 +3,6 @@ session_start();
 if(isset($_SESSION['username'])){
     header("location:profile.php");
 }
-
 ?>
 
 <!doctype html>
@@ -21,9 +20,7 @@ if(isset($_SESSION['username'])){
         <link rel="stylesheet" href="./style.css"> 
 </head>
 
-
 <body>
-
     <div class="container mt-5">
         <div class="row">
             <div class="col-lg-4 offset-lg-4" id="alert">
@@ -38,18 +35,14 @@ if(isset($_SESSION['username'])){
                 <h2 class="text-center mt-2"> Login</h2>
                 <form action="" method="post" role="form" class="p-2" id="login-frm">
                     <div class="form-group">
-                        <input type="text" name="username" class="form-control" placeholder="Username" required minlength="3" 
-                         value= "<?php if(isset($_COOKIE['username'])){echo $_COOKIE['username']; } ?>">
+                        <input type="text" name="username" class="form-control" placeholder="Username" required minlength="3" >
                     </div>
                     <div class="form-group">
-                        <input type="password" name="password" class="form-control" placeholder="Password" required minlength="6" 
-                        value= "<?php if(isset($_COOKIE['password'])){echo $_COOKIE['password']; } ?>">
+                        <input type="password" name="password" class="form-control" placeholder="Password" required minlength="6" >
                     </div>
                     <div class="form-group">
                         <div class="custom-control custom-checkbox">
-                            <input type="checkbox" name="rem" class="custom-control-input" id="customCheck"
-                            <?php if(isset($_COOKIE['username']))  ?> checked <?php  ?>  >
-                        
+                            <input type="checkbox" name="rem" class="custom-control-input" id="customCheck">                     
                             <label for="customCheck" class="custom-control-label">Remember Me </label>
                             <a href="#" id="forgot-btn" class="float-right">Forgot Password?</a>
                         </div>
@@ -99,7 +92,6 @@ if(isset($_SESSION['username'])){
                 </form>
             </div>
         </div>
-
 
         <!-- forgot password -->
         <div class="row justify-content-center">
