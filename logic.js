@@ -49,22 +49,30 @@
           });
 
           //for login
-
           $("#login").click(function(e){
             if(document.getElementById('login-frm').checkValidity()){
                 e.preventDefault();
                 $.ajax({
                     url: 'action.php',
-                    method:'post',
-                    data:$("#login-frm").serialize()+'&action=login',
-                    success:function(response){
-                        $("#alert").show();
-                        $("#result").html(response);
+                    method: 'post',
+                    data: $("#login-frm").serialize()+'&action=login',
+                    success: function(response){
+                        if(response === "Okay"){
+                            window.location='profile.php';
+                        }
+                        else{
+                            $("#alert").show();
+                            $("#result").html(response);
+                        }
                     }
                 });
             }
-            return true;
-          });
+          
+          return true;
+        });
+
+
+    
 
           // for forget pswrd
 

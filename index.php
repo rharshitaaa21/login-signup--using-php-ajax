@@ -1,3 +1,11 @@
+<?php
+session_start();
+if(isset($_SESSION['username'])){
+    header("location:profile.php");
+}
+
+?>
+
 <!doctype html>
 <html lang="en">
 
@@ -30,14 +38,18 @@
                 <h2 class="text-center mt-2"> Login</h2>
                 <form action="" method="post" role="form" class="p-2" id="login-frm">
                     <div class="form-group">
-                        <input type="text" name="username" class="form-control" placeholder="Username" required minlength="3">
+                        <input type="text" name="username" class="form-control" placeholder="Username" required minlength="3" 
+                         value= "<?php if(isset($_COOKIE['username'])){echo $_COOKIE['username']; } ?>">
                     </div>
                     <div class="form-group">
-                        <input type="password" name="password" class="form-control" placeholder="Password" required minlength="6">
+                        <input type="password" name="password" class="form-control" placeholder="Password" required minlength="6" 
+                        value= "<?php if(isset($_COOKIE['password'])){echo $_COOKIE['password']; } ?>">
                     </div>
                     <div class="form-group">
                         <div class="custom-control custom-checkbox">
-                            <input type="checkbox" name="rem" class="custom-control-input" id="customCheck">
+                            <input type="checkbox" name="rem" class="custom-control-input" id="customCheck"
+                            <?php if(isset($_COOKIE['username']))  ?> checked <?php  ?>  >
+                        
                             <label for="customCheck" class="custom-control-label">Remember Me </label>
                             <a href="#" id="forgot-btn" class="float-right">Forgot Password?</a>
                         </div>
