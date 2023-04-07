@@ -58,42 +58,23 @@ if(isset($_POST['action']) && $_POST['action'] == 'login'){
     session_start();
     $username = $_POST['username'];
     $password = $_POST['password'];
-    // $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-
     $stmt_l = $conn->prepare("SELECT * FROM users WHERE username=? ");
    $stmt_l->bind_param("s",$username);
    $stmt_l->execute();
 
    $result =$stmt_l->get_result();
-//    if (!$result) {
-//     print_r( mysqli_error($conn));
-//     exit();
-// }
+
    $user = $result->fetch_assoc();
-//    print_r( $user);
-
-
-//    if($user ){
-//     if(password_verify($password, $user['pass'])){
-// //    echo 'yupp!';
-//     $_SESSION['username']=$username;
-//     echo 'Okay'; // control will go to login-ajax function 
-//    }}
-//    else{
-//     // print_r( $result );
-//       echo 'Login Failed! Check your Username and Password';
-    
-//    }
-
-//  }
-
 if ($user) {
     if (password_verify($password, $user['pass'])) {
         $_SESSION['username'] = $username;
         echo 'Okay'; // control will go to login-ajax function 
     } else {
-        echo 'Login Failed! Check your Username or Password';
+        echo 'Login Failed! Incorrect Password';
     }
 } 
+else{
+    echo 'User does not exist!';
+}
 }
 ?>
