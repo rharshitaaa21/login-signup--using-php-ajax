@@ -73,11 +73,7 @@ if(isset($_POST['action']) && $_POST['action'] == 'login'){
     if(password_verify($password, $user['pass']))
     $_SESSION['username']=$username;
     
-$stmt = $conn->prepare("SELECT * FROM users WHERE username=?");
-$stmt->bind_param("s",$user);
-$stmt->execute();
-$result = $stmt->get_result();
-$row = $result->fetch_array(MYSQLI_ASSOC);
+
     echo 'Okay'; // control will go to login-ajax function 
    }
    else{
