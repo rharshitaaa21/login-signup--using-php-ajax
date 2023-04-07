@@ -73,18 +73,27 @@ if(isset($_POST['action']) && $_POST['action'] == 'login'){
 //    print_r( $user);
 
 
-   if($user ){
-    if(password_verify($password, $user['pass']))
-    $_SESSION['username']=$username;
+//    if($user ){
+//     if(password_verify($password, $user['pass'])){
+// //    echo 'yupp!';
+//     $_SESSION['username']=$username;
+//     echo 'Okay'; // control will go to login-ajax function 
+//    }}
+//    else{
+//     // print_r( $result );
+//       echo 'Login Failed! Check your Username and Password';
     
+//    }
 
-    echo 'Okay'; // control will go to login-ajax function 
-   }
-   else{
-    // print_r( $result );
-      echo 'Login Failed! Check your Username and Password';
-    
-   }
+//  }
 
- }
+if ($user) {
+    if (password_verify($password, $user['pass'])) {
+        $_SESSION['username'] = $username;
+        echo 'Okay'; // control will go to login-ajax function 
+    } else {
+        echo 'Login Failed! Check your Username or Password';
+    }
+} 
+}
 ?>
