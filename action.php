@@ -1,17 +1,16 @@
 <?php
 require 'config.php';
+
 if(isset($_POST['action']) && $_POST['action'] == 'register'){
-
-     $name = check_input($_POST['name']);
-     $uname = check_input($_POST['uname']);
-     $email = check_input($_POST['email']);
-     $pass = check_input($_POST['pass']);
-     $cpass = check_input($_POST['cpass']);
-     $pass = sha1($pass);
-     $cpass = sha1($cpass);
+     $name = $_POST['name'];
+     $uname = $_POST['uname'];
+     $email = $_POST['email'];
+     $pass = $_POST['pass'];
+     $cpass = $_POST['cpass'];
      $created = date('Y-m-d');
+     $passwordHash = password_hash($pass,PASSWORD_DEFAULT);
 
-     $errors = array();
+     $errors = array(); 
 
      if (strlen($pass) < 6) {
         $errors[] = "Password should be min 6 characters";
@@ -20,18 +19,17 @@ if (!preg_match("/\d/", $pass)) {
     $errors[] = "Password should contain at least one digit";
 }
 
-
 if ($errors) {
     foreach ($errors as $error) {
     }
     die();
 }
-
      if($pass != $cpass){
         echo 'Password did not match';
         exit();
      }
      else{
+        
         $sql = $conn-> prepare("SELECT username, email FROM users WHERE username=? OR email=?");
         $sql->bind_param("ss", $uname,$email);
         $sql->execute();
@@ -44,10 +42,9 @@ if ($errors) {
         elseif(isset($row['email'])==$email){
             echo 'Email is already registered';
         }
-
         else{
             $stmt = $conn->prepare("INSERT into users(name, username, email ,pass, created) VALUES(?,?,?,?,?)");
-            $stmt->bind_param("sssss",$name,$uname,$email,$pass,$created);
+            $stmt->bind_param("sssss",$name,$uname,$email,$passwordHash,$created);
             if($stmt->execute()){
                 echo 'Registered Successfully. Login Now!';
             }
@@ -55,45 +52,43 @@ if ($errors) {
                 echo 'Something went wrong. Please try again';
             }
         }    }
-}
-     if(isset($_POST['action']) && $_POST['action'] == 'login'){
-        session_start();
-        $username = $_POST['username'];
-        $password = sha1($_POST['password']);
+    }
+     
 
-        $stmt_l = $conn->prepare("SELECT * FROM users WHERE username=? AND pass=?");
-       $stmt_l->bind_param("ss",$username,$password);
-       $stmt_l->execute();
-       $user=$stmt_l->fetch();
+if(isset($_POST['action']) && $_POST['action'] == 'login'){
+    session_start();
+    $username = $_POST['username'];
+    $password = $_POST['password'];
+    $stmt_l = $conn->prepare("SELECT * FROM users WHERE username=? AND pass=?");
+   $stmt_l->bind_param("ss",$username,$password);
+   $stmt_l->execute();
 
-       if($user != null){
-        $_SESSION['username']=$username;
-        echo 'Okay';
-        if(!empty($_POST['rem'])){
-            setcookie("username",$_POST['username'], time()+(10*365*24*60*60));
-            setcookie("password",$_POST['password'], time()+(10*365*24*60*60));
-        }
-        else{
-            if(isset($_COOKIE['username'])){
-                setcookie("username","");
-            }
-            if(isset($_COOKIE['password'])){
-                setcookie("password","");
-            }
-        }
-       }
-       else{
-        echo 'Login Failed! Check your Username and Password';
-       }
+   $result =$stmt_l->get_result();
+   $user = $result->fetch_array(MYSQLI_ASSOC);
 
-     }
 
-function check_input($data){
-    $data = trim($data);
-    $data = stripslashes($data);
-    $data = htmlspecialchars($data);
-    return $data;
+   print_r( $user);
 
-}
+   if($user ){
+    if(password_verify($password, $user['pass']))
+    $_SESSION['username']=$username;
+    
+$stmt = $conn->prepare("SELECT * FROM users WHERE username=?");
+$stmt->bind_param("s",$user);
+$stmt->execute();
+$result = $stmt->get_result();
+$row = $result->fetch_array(MYSQLI_ASSOC);
+    echo 'Okay'; // control will go to login-ajax function 
+   }
+   else{
+      echo 'Login Failed! Check your Username and Password';
+    // print_r($user);
+    
+   }
+
+ }
+
+
+
 
 ?>
