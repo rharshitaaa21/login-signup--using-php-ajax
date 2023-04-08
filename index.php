@@ -24,7 +24,7 @@ if(isset($_SESSION['username'])){
     <div class="container mt-5">
         <div class="row">
             <div class="col-lg-4 offset-lg-4" id="alert">
-                <div class="alert alert-success">
+                <div class="alert alert-primary">
                     <strong id="result"></strong>
                 </div>
             </div>

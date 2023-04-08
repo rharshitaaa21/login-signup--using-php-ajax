@@ -12,47 +12,65 @@ if(isset($_POST['action']) && $_POST['action'] == 'register'){
 
      $errors = array(); 
 
-     if (strlen($pass) < 6) {
-        $errors[] = "Password should be min 6 characters";
-    }
-if (!preg_match("/\d/", $pass)) {
-    $errors[] = "Password should contain at least one digit";
-}
-
-if ($errors) {
-    foreach ($errors as $error) {
-    }
-    die();
-}
-     if($pass != $cpass){
-        echo 'Password did not match';
-        exit();
+     if(empty($name) || empty($uname) || empty($email) || empty($pass) || empty($cpass))
+     {
+       array_push($errors, "All fields are required");
      }
-     else{
-        
-        $sql = $conn-> prepare("SELECT username, email FROM users WHERE username=? OR email=?");
-        $sql->bind_param("ss", $uname,$email);
-        $sql->execute();
-        $result =$sql->get_result();
+     if(!filter_var($email, FILTER_VALIDATE_EMAIL))
+     {
+       array_push($errors, "Email is not valid");
+     }
+     if(strlen($pass) < 6)
+     {
+       array_push($errors, "Password must be at least 6 characters long");
+     }
+     if (!preg_match("/[\'^£$%&*()}{@#~?><>,|=_+!-]/", $pass))
+     {
+         array_push($errors, "Password must contain at least one special character");
+     }
+     if($pass !== $cpass)
+     {
+       array_push($errors, "Passwords do not match");
+     }
+     
+     if(count($errors) > 0)
+     {
+        foreach($errors as $error)
+        {
+          echo "$error";
+        }
+     }
+     else
+     {
+        $stmt = $conn->prepare("SELECT username, email FROM users WHERE username=? OR email=?");
+        $stmt->bind_param("ss", $uname, $email);
+        $stmt->execute();
+        $result = $stmt->get_result();
         $row = $result->fetch_array(MYSQLI_ASSOC);
 
-        if( isset($row['username']) ==$uname){
+        if($row != null && $row['username'] == $uname){
             echo 'Username not available. Please try something else';
         }
-        elseif(isset($row['email'])==$email){
+        elseif($row != null && $row['email'] == $email){
             echo 'Email is already registered';
         }
-        else{
-            $stmt = $conn->prepare("INSERT into users(name, username, email ,pass, created) VALUES(?,?,?,?,?)");
-            $stmt->bind_param("sssss",$name,$uname,$email,$passwordHash,$created);
-            if($stmt->execute()){
+        else
+        {
+            $stmt = $conn->prepare("INSERT into users(name, username, email, pass, created) VALUES(?,?,?,?,?)");
+            $stmt->bind_param("sssss", $name, $uname, $email, $passwordHash, $created);
+            if($stmt->execute())
+            {
                 echo 'Registered Successfully. Login Now!';
             }
-            else{
+            else
+            {
                 echo 'Something went wrong. Please try again';
             }
-        }    }
-    }
+        }
+     }
+}
+
+
 
 if(isset($_POST['action']) && $_POST['action'] == 'login'){
     session_start();
