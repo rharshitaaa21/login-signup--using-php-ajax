@@ -31,43 +31,61 @@ $("#forgot-box").hide();
 
   //   submit form without page refresh----------------->
               //for registration
-    $("#register").click(function(e){
-      if(document.getElementById('register-frm').checkValidity()){
-          e.preventDefault();
-          $.ajax({
-              url: 'action.php',
-              method:'post',
-              data:$("#register-frm").serialize()+'&action=register',
-              success:function(response){
-                  $("#alert").show();
-                  $("#result").html(response);
-              }
-          });
-      }
-      return true;
-    });
-
-               //for login---------------------->
-    $("#login").click(function(e){
-      if(document.getElementById('login-frm').checkValidity()){
-          e.preventDefault();
-          $.ajax({
-              url: 'action.php',
-              method: 'post',
-              data: $("#login-frm").serialize()+'&action=login',
-              success: function(response){
-                  if(response === "Okay"){
-                      window.location='profile.php';
-                  }
-                  else{
-                      $("#alert").show();
-                      $("#result").html(response);
-                  }
-              }
-          });
-      }
-    
-    return true;
-  });
-
+              $("#register").click(function(e){
+                if(document.getElementById('register-frm').checkValidity()){
+                    e.preventDefault();
+                    $.ajax({
+                        url: 'action.php',
+                        method: 'post',
+                        data: $("#register-frm").serialize()+'&action=register',
+                        success: function(response){
+                           
+                                $("#alert").show();
+                                $("#result").html(response);
+                            
+                        }
+                    }).fail(function(xhr, status, error) {
+                        var errors = JSON.parse(xhr.responseText);
+                        var errorString = "";
+                        $.each(errors, function(index, value){
+                            errorString += value + "<br>";
+                        });
+                        $("#alert").show();
+                        $("#result").html(errorString);
+                    });
+                }
+              
+                return true;
+              });
+              
+              $("#login").click(function(e){
+                if(document.getElementById('login-frm').checkValidity()){
+                    e.preventDefault();
+                    $.ajax({
+                        url: 'action.php',
+                        method: 'post',
+                        data: $("#login-frm").serialize()+'&action=login',
+                        success: function(response){
+                            if(response === "Okay"){
+                                window.location='profile.php';
+                            }
+                            else{
+                                $("#alert").show();
+                                $("#result").html(response);
+                            }
+                        }
+                    }).fail(function(xhr, status, error) {
+                        var errors = JSON.parse(xhr.responseText);
+                        var errorString = "";
+                        $.each(errors, function(index, value){
+                            errorString += value + "<br>";
+                        });
+                        $("#alert").show();
+                        $("#result").html(errorString);
+                    });
+                }
+              
+                return true;
+              });
+            
 });
