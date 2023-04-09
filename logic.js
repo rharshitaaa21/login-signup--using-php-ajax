@@ -42,7 +42,6 @@ $("#forgot-box").hide();
                            
                                 $("#alert").show();
                                 $("#result").html(response);
-                            
                         }
                     }).fail(function(xhr, status, error) {
                         var errors = JSON.parse(xhr.responseText);

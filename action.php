@@ -89,12 +89,13 @@ if(isset($_POST['action']) && $_POST['action'] == 'login'){
         if (password_verify($password, $user['pass'])) {
             $_SESSION['username'] = $username;
             echo 'Okay'; // control will go to login-ajax function 
-        } else {
-            echo 'Login Failed! Incorrect Password';
+        } else {   $response = 'Login Failed! Incorrect Password';
+            echo $response;
         }
     } 
     else{
-        echo 'User does not exist!';
+        $response= 'User does not exist!';
+        echo $response;
     }
 }
 
