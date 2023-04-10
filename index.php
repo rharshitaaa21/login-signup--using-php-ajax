@@ -47,9 +47,7 @@ if(isset($_SESSION['username'])){
                             <a href="#" id="forgot-btn" class="float-right">Forgot Password?</a>
                         </div>
                     </div>
-                    <div class="from-group">
-                        <input type="submit" name="login" id="login" value="Login" class="btn btn-primary btn-block">
-                    </div>
+                    <button class="from-group btn btn-primary btn-block" id="login">Login</button>
                     <div class="form-group">
                         <p class="text-center mt-3">New User? <a href="#" id="register-btn">Register Here</a></p>
                     </div>
@@ -83,9 +81,10 @@ if(isset($_SESSION['username'])){
                                 terms and conditions</a>  </label>
                         </div>
                     </div>
-                    <div class="from-group">
+                    <!-- <div class="from-group">
                         <input type="submit" name="register" id="register" value="Register" class="btn btn-primary btn-block">
-                    </div>
+                    </div> -->
+                    <button class="from-group btn btn-primary btn-block" id="register">Register</button>
                     <div class="form-group">
                         <p class="text-center mt-3">Already Registered? <a href="#" id="login-btn">Login Here</a></p>
                     </div>

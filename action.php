@@ -50,7 +50,7 @@ if(isset($_POST['action']) && $_POST['action'] == 'register'){
             $response = 'Username not available. Please try something else';
             echo $response;
         }
-        elseif($row != null && $row['email'] == $email){
+       if($row != null && $row['email'] == $email){
             $response = 'Email is already registered';
             echo $response;
         }
@@ -71,7 +71,6 @@ if(isset($_POST['action']) && $_POST['action'] == 'register'){
         }
     }
 } 
-
 
 
 if(isset($_POST['action']) && $_POST['action'] == 'login'){

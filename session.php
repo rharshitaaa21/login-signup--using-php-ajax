@@ -11,10 +11,11 @@ $stmt->execute();
 $result = $stmt->get_result();
 $row = $result->fetch_array(MYSQLI_ASSOC);
 
-$username = $row['username'];
-$name = $row['name'];
-$email = $row['email'];
-$created = $row['created'];
+
+// $username = $row['username'];
+// $name = $row['name'];
+ $email = $row['email'];
+// $created = $row['created'];
 
 
 if(!isset($user)){
